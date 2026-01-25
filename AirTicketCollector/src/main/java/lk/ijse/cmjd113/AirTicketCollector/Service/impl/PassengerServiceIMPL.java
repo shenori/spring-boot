@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service("ServiceOne")
-@Primary
 public class PassengerServiceIMPL implements PassengerService {
     @Override
     public void savePassenger(PassengerDTO passenger) {

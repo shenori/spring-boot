@@ -4,36 +4,44 @@ import lk.ijse.cmjd113.AirTicketCollector.dto.PassengerDTO;
 import lk.ijse.cmjd113.AirTicketCollector.dto.UserDTO;
 import lk.ijse.cmjd113.AirTicketCollector.Service.PassengerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/passengers")
-@RequiredArgsConstructor
 public class PassengerController {
     private final PassengerService passengerService;
+
+    public PassengerController(@Qualifier ("ServiceTwo") PassengerService passengerService) {
+        this.passengerService = passengerService;
+    }
+
     @PostMapping
     public ResponseEntity<Void> savePassenger(@RequestBody PassengerDTO passengerDTO) {
         passengerService.savePassenger(passengerDTO);
         return new  ResponseEntity<>(HttpStatus.CREATED);
     }
-    public ResponseEntity<PassengerDTO> getSelectedPassenger(PassengerDTO passengerDTO) {
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<PassengerDTO> getSelectedPassenger(@PathVariable ("id") String passengerId) {
+       return new ResponseEntity<>(passengerService.getSelectedPassenger(passengerId), HttpStatus.OK);
     }
+    @GetMapping
     public ResponseEntity<List<PassengerDTO>> getAllPassengers() {
-        return null;
+        return new ResponseEntity<>(passengerService.getAllPassengers(), HttpStatus.OK);
     }
-    public ResponseEntity <Void>  deletePassenger(String passengerId) {
-        return null;
+    @DeleteMapping("/{id}")
+    public ResponseEntity <Void>  deletePassenger(@PathVariable ("id") String passengerId) {
+        passengerService.deletePassenger(passengerId);
+        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    public ResponseEntity<Void> updatePassenger(String passengerId,PassengerDTO passengerDTO) {
-        return null;
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updatePassenger(@PathVariable ("id") String passengerId, @RequestBody PassengerDTO passengerDTO) {
+      passengerService.updatePassenger(passengerId,passengerDTO);
+       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
