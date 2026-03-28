@@ -13,7 +13,7 @@ import java.util.Optional;
 
 // ✅ NEW FILE: Service Implementation — the missing link between controller and DB
 @Service
-public class AirportServiceImpl implements AirportService {
+public class AirportServiceIMPL implements AirportService {
 
     @Autowired
     private AirportRepository airportRepository; // Talks to the DB
