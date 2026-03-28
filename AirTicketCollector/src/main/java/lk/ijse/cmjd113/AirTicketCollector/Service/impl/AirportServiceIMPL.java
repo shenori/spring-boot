@@ -1,5 +1,6 @@
-package lk.ijse.cmjd113.AirTicketCollector.Service;
+package lk.ijse.cmjd113.AirTicketCollector.Service.impl;
 
+import lk.ijse.cmjd113.AirTicketCollector.Service.AirportService;
 import lk.ijse.cmjd113.AirTicketCollector.dto.AirportDTO;
 import lk.ijse.cmjd113.AirTicketCollector.entities.AirportEntity;
 import lk.ijse.cmjd113.AirTicketCollector.repository.AirportRepository;
@@ -35,7 +36,7 @@ public class AirportServiceIMPL implements AirportService {
         if (entity.isPresent()) {
             return modelMapper.map(entity.get(), AirportDTO.class);
         }
-        // ✅ You can throw a custom exception here later
+        // You can throw a custom exception here later
         throw new RuntimeException("Airport not found with ID: " + airportId);
     }
 
@@ -43,7 +44,8 @@ public class AirportServiceIMPL implements AirportService {
     public List<AirportDTO> getAllAirports() {
         List<AirportEntity> allEntities = airportRepository.findAll();
         // Convert List<Entity> → List<DTO>
-        return modelMapper.map(allEntities, new TypeToken<List<AirportDTO>>() {}.getType());
+        return modelMapper.map(allEntities, new TypeToken<List<AirportDTO>>() {
+        }.getType());
     }
 
     @Override
